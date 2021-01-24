@@ -57,10 +57,10 @@ def days_needed(goal, d):
     params_out = fit_normal_model(df_out_thus_far.money)
     money_left = df2[df2.date <= d].money.sum()
     if (params_in[0] - params_out[0] < 0):
-        return (f"It seems you are spending more money than you earn so far, try spending less to achieve your goal")
+        return ("It seems you are spending more money than you earn so far, try spending less to achieve your goal")
     else:
         future_days = (goal - money_left) / (params_in[0] - params_out[0])
-        return (f"You need to keep going for {future_days} days to achieve your goal")
+        return ("You need to keep going for %d days to achieve your goal" % (int(future_days)))
 
 
 def hypo_testing(x, y):
@@ -122,4 +122,4 @@ with open('model_out.txt', 'w') as out:
         'Based on your income and expend date so far: %s, your money can still support you for around %d days without anymore income \n' %(str(d), int(r)))
     out.write(
         'your goal is to save %d, based on your current financial histroy, %s\n' % (goal, dn))
-    out.write(f'{hypotest_res}\n')
+    out.write(hypotest_res + '\n')

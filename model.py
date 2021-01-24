@@ -99,10 +99,10 @@ def get_hypotest_conclusion(p, threshold):
     return hypotest_res
 
 
-d = date(2018, 3, 1)
+d = date.today()
 r = days_left(d)
 goal = 10000
-dn = days_needed(goal, date(2018, 3, 1))
+dn = days_needed(goal, d)
 
 params_in = fit_normal_model(df[df.money > 0].money)
 params_out = fit_normal_model(np.negative(df[df.money < 0].money))

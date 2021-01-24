@@ -58,6 +58,43 @@ def days_needed(goal, d):
         future_days = (goal - money_left) / (params_in[0] - params_out[0])
         return (f"You need to keep going for {future_days} days to achive your goal")
 
+
+def hypo_testing(x, y):
+    # hypothesis testing, testing if there is enough evidence that the
+    # mean of income is the same as the mean of expend
+
+    # 2. Define the test statistic
+    def t(x, y):
+        return np.mean(y) - np.mean(x)
+    # 3. To generate a synthetic dataset, assuming H0, ...
+    mu_hat = np.mean(np.concatenate([x, y]))
+    sigma_hat = np.sqrt(np.mean((np.concatenate([x, y])-mu_hat)**2))
+    # print(mu_hat)
+    # print(sigma_hat)
+
+    def rxy_star():
+        return (np.random.normal(loc=mu_hat, scale=sigma_hat, size=len(x)), np.random.normal(loc=mu_hat, scale=sigma_hat, size=len(y)))
+    # 4. Sample the test statistic, compare to what was observed, and find p-value
+    t_ = np.array([t(*rxy_star()) for _ in range(10000)])
+    print(t_)
+    plt.hist(t_, bins=60, alpha=.3)
+    plt.axvline(x=t(x, y), linestyle='dashed', color='black')
+    p = 2*min(np.mean(t_ >= t(x, y)), np.mean(t_ <= t(x, y)))
+    return p
+
+
+def get_hypotest_conclusion(p, threshold):
+    hypotest_res = ''
+    if (p < threshold):
+        if income.mean() > expend.mean():
+            hypotest_res = 'According to our TOTALLY accurate statistical testing, your average income is larger than your average expend, well done!'
+        else:
+            hypotest_res = 'According to our TOTALLY accurate statistical testing, your average expend is larger than your average income, consider saving money!'
+    else:
+        hypotest_res = 'According to our TOTALLY accurate statistical testing, your average income matches your average expend, keep going!'
+    return hypotest_res
+
+
 d = date(2018, 3, 1)
 r = days_left(d)
 goal = 10000
@@ -65,12 +102,20 @@ dn = days_needed(goal, date(2018, 3, 1))
 
 params_in = fit_normal_model(df[df.money > 0].money)
 params_out = fit_normal_model(np.negative(df[df.money < 0].money))
+
+income = np.negative(df[df.money < 0].money)
+expend = df[df.money > 0].money
+p = hypo_testing(income, expend)
+threshold = 0.05
+hypotest_res = get_hypotest_conclusion(p, threshold)
+
 with open('model_out.txt', 'w') as out:
     out.write(
         f"Your average income is {params_in[0]:.3f} and the variance of your income is {params_in[1]:.3f}\n")
     out.write(
         f"Your average income is {params_out[0]:.3f} and the variance of your income is {params_out[1]:.3f}\n")
-    out.write(f'Based on your income and expend date so far: {str(d)}, your money can still support you for around {int(r)} days\n')
-    out.write(f'your goal is to save {goal}, based on your current financial histroy, {dn}\n')
-
-
+    out.write(
+        f'Based on your income and expend date so far: {str(d)}, your money can still support you for around {int(r)} days\n')
+    out.write(
+        f'your goal is to save {goal}, based on your current financial histroy, {dn}\n')
+    out.write(f'{hypotest_res}\n')

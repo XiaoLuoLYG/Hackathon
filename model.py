@@ -1,3 +1,7 @@
+# ACKNOWLEDGEMENTS
+# This code borrows and references lots of samples from my Data Science Dr Damon Wischik,
+# whose original code can be found at https://github.com/damonjw/datasci
+
 import numpy as np
 import pandas as pd
 import math

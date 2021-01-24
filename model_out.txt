@@ -1,5 +1,5 @@
 Your average income is 79.679 and the variance of your income is 4.047
 Your average income is 81.381 and the variance of your income is 4.087
-Based on your income and expend date so far: 2018-03-01, your money can still support you for around 22 days
+Based on your income and expend date so far: 2018-03-01, your money can still support you for around 22 days without anymore income 
 your goal is to save 10000, based on your current financial histroy, It seems you are spending more money than you earn so far, try spending less to achieve your goal
 According to our TOTALLY accurate statistical testing, your average income matches your average expend, keep going!

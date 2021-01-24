@@ -60,7 +60,7 @@ def days_needed(goal, d):
         return (f"It seems you are spending more money than you earn so far, try spending less to achieve your goal")
     else:
         future_days = (goal - money_left) / (params_in[0] - params_out[0])
-        return (f"You need to keep going for {future_days} days to achive your goal")
+        return (f"You need to keep going for {future_days} days to achieve your goal")
 
 
 def hypo_testing(x, y):
@@ -119,7 +119,7 @@ with open('model_out.txt', 'w') as out:
     out.write(
         f"Your average income is {params_out[0]:.3f} and the variance of your income is {params_out[1]:.3f}\n")
     out.write(
-        f'Based on your income and expend date so far: {str(d)}, your money can still support you for around {int(r)} days\n')
+        f'Based on your income and expend date so far: {str(d)}, your money can still support you for around {int(r)} days without anymore income \n')
     out.write(
         f'your goal is to save {goal}, based on your current financial histroy, {dn}\n')
     out.write(f'{hypotest_res}\n')

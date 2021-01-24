@@ -115,11 +115,11 @@ hypotest_res = get_hypotest_conclusion(p, threshold)
 
 with open('model_out.txt', 'w') as out:
     out.write(
-        f"Your average income is {params_in[0]:.3f} and the variance of your income is {params_in[1]:.3f}\n")
+        "Your average income is %3f and the variance of your income is %3f\n" % (params_in[0], params_in[1]))
     out.write(
-        f"Your average income is {params_out[0]:.3f} and the variance of your income is {params_out[1]:.3f}\n")
+        "Your average income is %3f and the variance of your income is %3f\n" % (params_out[0], params_out[1]))
     out.write(
-        f'Based on your income and expend date so far: {str(d)}, your money can still support you for around {int(r)} days without anymore income \n')
+        'Based on your income and expend date so far: %s, your money can still support you for around %d days without anymore income \n' %(str(d), int(r)))
     out.write(
-        f'your goal is to save {goal}, based on your current financial histroy, {dn}\n')
+        'your goal is to save %d, based on your current financial histroy, %s\n' % (goal, dn))
     out.write(f'{hypotest_res}\n')
